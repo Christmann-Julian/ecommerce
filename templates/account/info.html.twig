@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="section register" id="register" aria-label="register">
+        <div class="container flex register-col">
+            <div class="register-form">
+                <h2 class="h2">Modification d'information</h2>
+                {{ form_start(form) }}
+                <div class="register-input">
+                <div>
+                {% if message %}
+                    <h3 class="register-error-title" style="color: {{message_color}};">{{message}}</h3>
+                {% endif %}
+                </div>
+                    <div class="register-flex">
+                        <div>
+                            {{ form_widget(form.firstname, {'attr': {'class': 'register-demi'}}) }}
+                            {{ form_label(form.firstname) }}
+                            <span class="register-error">{{ form_errors(form.firstname) }}</span>
+                        </div>
+                        <div>
+                            {{ form_widget(form.lastname, {'attr': {'class': 'register-demi'}}) }}
+                            {{ form_label(form.lastname) }}
+                            <span class="register-error">{{ form_errors(form.lastname) }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        {{form_widget(form.old_password)}}
+                        {{form_label(form.old_password)}}
+                        <span class="register-error">{{ form_errors(form.old_password) }}</span>
+                    </div>
+                    <div>
+                        {{form_widget(form.new_password.first)}}
+                        {{form_label(form.new_password.first)}}
+                        <span class="register-error">{{ form_errors(form.new_password.first) }}</span>
+                    </div>
+                    <div>
+                        {{form_widget(form.new_password.second)}}
+                        {{form_label(form.new_password.second)}}
+                    </div>
+                </div>
+                <div class="register-btn">
+                    {{ form_row(form.submit) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

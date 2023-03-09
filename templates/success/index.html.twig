@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="section success" id="success" aria-label="success">
+        <div>
+            <p>Merci de nous avoir fait confiance pour votre achat !</p>
+            <a href="{{path('app_account')}}" class="success-btn">Voir la commande</a>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{product.name}}{% endblock %}
+
+{% block body %}
+    <section class="productContent">
+        <div class="container">
+            <div class="productContent-div">
+                <div class="productContent-div-left">
+                    <img src="../uploads/{{product.image}}" alt="{{product.name}}">
+                </div>
+                <div class = "productContent-div-right">
+                    <span class="productContent-name">{{product.name}}</span>
+                    <div class="productContent-category">
+                        <span><i>{{product.category}}</i></span>
+                    </div>
+                    <span class="productContent-price">{{(product.price / 100)|number_format(2, ',', '.')}}€
+                    {% if product.sale %}
+                        <span class="badge orange">Promo</span>
+                        <span class="badge cyan">{{product.sale}}%</span>
+                    {% endif %}
+                    </span>
+                    <p class="productContent-description">{{product.description}}</p>
+                    <div class="productContent-btn-groups">
+                        <a href="{{ path('add_cart', {'id': product.id }) }}" class="productContent-buy-now-btn">Ajouter au panier</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

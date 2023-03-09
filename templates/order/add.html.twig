@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="section order" id="order" aria-label="order">
+        <div class="container flex">
+            <h2 class="h2">Récapitulatif avant payement</h2>
+            <p>Vérifier votre commande avant le payement</p>
+            <div class="order-grid">
+                <div>
+                    <h3 class="h3">Information de livraison</h3>
+                    <p>Transporteur: {{ carrier.name }} - {{((carrier.price))|number_format(2, ',', '.')}}€</p>
+                    <p>Adresse de livraison: {{ delivery|raw }}</p>
+                </div>
+                <div>
+                    <h3 class="h3">Récapitulatif de la commande</h3>
+                    {% set total = 0 %}
+                    {% for product in cart %}
+                        <div class="order-recap-row">
+                            <img src="/uploads/{{product.product.image}}" alt="{{product.product.name}}" height="100px" width="100px" />
+                            <div class="order-recap-txt">
+                                <p>{{product.product.name}} à {{((product.quantity*product.product.price) / 100)|number_format(2, ',', '.')}}€</p>
+                                <p>Quantité: {{product.quantity}} </p>
+                            </div>
+                        </div>
+                        {% set total = total + (product.quantity*product.product.price) %}
+                    {% endfor %}
+                    <p><b>Sous-total:</b> {{((total) / 100)|number_format(2, ',', '.')}}€</p>
+                    <p><b>Livraison:</b> {{((carrier.price))|number_format(2, ',', '.')}}€</p>
+                    <p><b>Total:</b> {{(carrier.price + (total/100))|number_format(2, ',', '.')}}€</p>
+                    <a href="{{path('app_success')}}" class="order-btn">Payer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

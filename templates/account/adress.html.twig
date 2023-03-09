@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="section register" id="register" aria-label="register">
+        <div class="container flex">
+            <div class="register-form">
+                <h2 class="h2">Gérer mes adresses</h2>
+                {{ form_start(form) }}
+                <div class="register-input">
+                <div>
+                </div>
+                    <div class="register-flex">
+                        <div>
+                            {{ form_widget(form.name, {'attr': {'class': 'register-demi'}}) }}
+                            {{ form_label(form.name) }}
+                            <span class="register-error">{{ form_errors(form.name) }}</span>
+                        </div>
+                        <div>
+                            {{ form_widget(form.country, {'attr': {'class': 'register-demi'}}) }}
+                            {{ form_label(form.country) }}
+                            <span class="register-error">{{ form_errors(form.country) }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        {{form_widget(form.adress)}}
+                        {{form_label(form.adress)}}
+                        <span class="register-error">{{ form_errors(form.adress) }}</span>
+                    </div>
+                    <div>
+                        {{form_widget(form.city)}}
+                        {{form_label(form.city)}}
+                        <span class="register-error">{{ form_errors(form.city) }}</span>
+                    </div>
+                    <div>
+                        {{form_widget(form.postal)}}
+                        {{form_label(form.postal)}}
+                        <span class="register-error">{{ form_errors(form.postal) }}</span>
+                    </div>
+                </div>
+                <div class="register-btn">
+                    {{ form_row(form.submit) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

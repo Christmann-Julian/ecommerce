@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="cart-container">
+      <div class="cart">
+        {% set total = 0 %}
+        {% set quantity = 0 %}
+        {% if cart|length > 0 %}
+            <div class="cart-table">
+
+              <div class="cart-layout-inline row th">
+                <div class="cart-col cart-col-pro">Produit</div>
+                <div class="cart-col cart-col-qty cart-align-center">QTE</div>
+                <div class="cart-col cart-none">Prix</div>
+                <div class="cart-col">Total</div>
+              </div>
+                {% for product in cart %}
+                    <div class="cart-layout-inline cart-row">
+
+                      <div class="cart-col cart-col-pro cart-layout-inline">
+                        <img src="/uploads/{{product.product.image}}" alt="{{product.product.name}}" />
+                        <p class="cart-none">{{product.product.name}}</p>
+                      </div>
+
+                      <div class="cart-col cart-col-qty cart-layout-inline">
+                        <a href="{{path('decrease_cart', {id: product.product.id})}}" class="cart-qty cart-qty-minus">-</a>
+                          <input type="numeric" value="{{product.quantity}}" />
+                        <a href="{{path('add_cart', {id: product.product.id})}}" class="cart-qty cart-qty-plus">+</a>
+                      </div>
+
+                      <div class="cart-col cart-col-vat cart-col-numeric cart-none">
+                        <p>{{(product.product.price / 100)|number_format(2, ',', '.')}}€</p>
+                      </div>
+                      <div class="cart-col cart-col-total cart-col-numeric">
+                          <p>{{((product.quantity*product.product.price) / 100)|number_format(2, ',', '.')}}€</p>
+                      </div>
+                    </div> 
+                    {% set total = total + (product.quantity*product.product.price) %}
+                    {% set quantity = quantity + product.quantity %}
+                {% endfor %}     
+            </div>
+        {% else %}
+            <p class="cart-align-center">Votre panier est vide</p>
+        {% endif %}
+      </div>
+      <div class="cart-recap">
+        <div>
+          <p>Nombre de produit: {{quantity}}</p>
+          <p>Total: {{((total) / 100)|number_format(2, ',', '.')}}€</p>
+        </div>
+        <div>
+          <a href="{{path('app_home')}}#product" class="cart-btn">Continuer mes achats</a>
+          {% if cart|length > 0 %}
+            <a href="{{path('app_order')}}" class="cart-btn">Valider et payer</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  
+{% endblock %}

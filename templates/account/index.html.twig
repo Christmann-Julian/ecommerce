@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+<section class="section account" id="account" aria-label="account">
+        <div class="container">
+
+            <h2 class="h2">Mes informations</h2>
+            <div class="account-btn">
+                <dir class="account-board account-info">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Nom</td>
+                            <td>Email</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h5>{{app.user.firstname}} {{app.user.lastname}}</h5>
+                            </td>
+                            <td>
+                                <h5>{{app.user.email}}</h5>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </dir>
+            </div>
+            <div class="account-btn">
+                <div>
+                    <button><a href="{{path('app_account_info')}}">Modifier</a></button>
+                </div>
+            </div>
+
+            <h2 class="h2">Mes adresses</h2>
+            {% if app.user.adresses|length == 0 %}
+                <p>Aucune adresse n'est renseignée</p>
+            {% else %}
+            <div class="account-btn">
+                <dir class="account-board account-info">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Nom D'adresse</td>
+                            <td>Adresse</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for adress in app.user.adresses %}
+                        <tr>
+                            <td>
+                                <h5>{{adress.name}}</h5>
+                            </td>
+                            <td>
+                                <h5>{{adress.adress}} - {{adress.city}} {{adress.postal}} - {{adress.country}}</h5>
+                            </td>
+                            <td>   
+                                <a href="{{path('app_account_adress_edit', {'id': adress.id})}}">Modifier</a>
+                                <a href="{{path('app_account_adress_delete', {'id': adress.id})}}">Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </dir>
+            </div>
+            {% endif %}
+            <div class="account-btn">
+                <div>
+                    <button><a href="{{path('app_account_adress')}}">Ajouter</a></button>
+                </div>
+            </div>
+
+            <h2 class="h2">Mes commandes</h2>
+            <dir class="account-board">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Commande</td>
+                            <td>Produits</td>
+                            <td>Livraison</td>
+                            <td class="account-none">Date</td>
+                            <td>Total</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td class="account-people">
+                                <img src="{{asset('./assets/images/order.jpg')}}" alt="">
+                                <div class="account-de account-none">
+                                    <h5>commande N°{{order.id}}</h5>
+                                    <p>{{order.delivery}}</p>
+                                </div>
+                            </td>
+                            <td class="account-des">
+                                <p>x{{order.orderDetails|length}}</p>
+                            </td>
+                            <td class="account-active">
+                                {% if order.state == 0 %}
+                                    <p>Non payé</p>
+                                {% elseif order.state == 1 %}
+                                    <p>En cours</p>
+                                {% elseif order.state == 2 %}
+                                    <p>Livré</p>
+                                {% endif %}
+                            </td>
+                            <td class="account-none">
+                                <p>{{order.createdAt|date('d/m/Y')}}</p>
+                            </td>
+                            <td>
+                                <p>{{(( order.getTotal/100) + order.carrierPrice)|number_format(2, ',', '.')}}€</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </dir>
+            <div class="account-btn">
+                <div>
+                    <button><a href="{{path('app_logout')}}">Se déconnecter</a></button>
+                </div>
+            </div>
+        </div>
+</section>
+{% endblock %}

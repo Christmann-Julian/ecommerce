@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider ma commande{% endblock %}
+
+{% block body %}
+    <section class="section order" id="order" aria-label="order">
+        <div class="container flex">
+            <h2 class="h2">Je passe ma commande</h2>
+            <p class="order-subtitle">Choissisez vos préférences avant de passer votre commande</p>
+            <div class="order-grid">
+                <div>
+                    {% set formhtml %}
+                    {{form_start(form, {action:path('app_order_recap')})}}
+                        <h3 class="h3">Choissisez l'adresse de livraison</h3>
+                        {{ form_row(form.adresses) }}
+                        <h3 class="h3">Choissisez votre transporteur</h3>
+                        {{ form_row(form.carriers) }}
+                        <div class="order-btn">
+                            {{ form_row(form.submit) }}
+                        </div>
+                    {{form_end(form)}}
+                    {% endset %}
+                    {{ formhtml|replace({'[br]' : '</br>'})|raw }}
+                </div>
+                <div>
+                    <h3 class="h3">Récapitulatif de la commande</h3>
+                    {% set total = 0 %}
+                    {% for product in cart %}
+                        <div class="order-recap-row">
+                            <img src="/uploads/{{product.product.image}}" alt="{{product.product.name}}" height="100px" width="100px" />
+                            <div class="order-recap-txt">
+                                <p>{{product.product.name}} à {{((product.quantity*product.product.price) / 100)|number_format(2, ',', '.')}}€</p>
+                                <p>Quantité: {{product.quantity}} </p>
+                            </div>
+                        </div>
+                        {% set total = total + (product.quantity*product.product.price) %}
+                    {% endfor %}
+                    <p><b>Total:</b> {{((total) / 100)|number_format(2, ',', '.')}}€</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

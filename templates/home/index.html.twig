@@ -1,0 +1,231 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+      <!-- #HERO -->
+      <section class="section hero" id="home" aria-label="home">
+        <div class="container">
+
+          <ul class="hero-list">
+            {% for key, category in categories  %}
+            {% if key == 0 %}
+            <li>
+              <a data-filter-btn="category{{key + 1}}" href="#product">
+                <div class="hero-card">
+  
+                  <figure class="card-banner img-holder" style="--width: 285; --height: 396;">
+                    <img src="./assets/images/hero-product-1.jpg" width="285" height="396" alt="{{category.name}}"
+                      class="img-cover">
+                  </figure>
+  
+                  <div class="card-content">
+                    <h3>
+                      <span class="card-title">{{category.name}}</span>
+                    </h3>
+  
+                    <p class="card-text">{{category.subtitle}}</p>
+                  </div>
+  
+                </div>
+              </a>
+            </li>
+            {% endif %}
+            {% if key == 1 %}
+            <li class="colspan-3">
+              <a data-filter-btn="category{{key + 1}}" href="#product">
+                <div class="hero-card">
+
+                  <figure class="card-banner img-holder" style="--width: 568; --height: 257;">
+                    <img src="./assets/images/hero-product-2.jpg" width="568" height="257" alt="{{category.name}}"
+                      class="img-cover">
+                  </figure>
+
+                  <div class="card-content">
+                    <h3>
+                      <span class="card-title">{{category.name}}</span>
+                    </h3>
+
+                    <p class="card-text">{{category.subtitle}}</p>
+                  </div>
+
+                </div>
+              </a>
+            </li>
+            {% endif %}
+            {% if key == 2 %}
+            <li class="colspan-2">
+              <a data-filter-btn="category{{key + 1}}" href="#product">
+                <div class="hero-card">
+
+                  <figure class="card-banner img-holder" style="--width: 580; --height: 213;">
+                    <img src="./assets/images/hero-product-4.jpg" width="580" height="213" alt="{{category.name}}"
+                      class="img-cover">
+                  </figure>
+
+                  <div class="card-content">
+                    <h3>
+                      <span class="card-title">{{category.name}}</span>
+                    </h3>
+
+                    <p class="card-text">{{category.subtitle}}</p>
+                  </div>
+
+                </div>
+              </a>
+            </li>
+            {% endif %}
+            {% if key == 3 %}
+            <li class="colspan-2">
+              <a data-filter-btn="category{{key + 1}}" href="#product">
+                <div class="hero-card">
+
+                  <figure class="card-banner img-holder" style="--width: 580; --height: 213;">
+                    <img src="./assets/images/hero-product-5.jpg" width="580" height="213" alt="{{category.name}}"
+                      class="img-cover">
+                  </figure>
+
+                  <div class="card-content">
+                    <h3>
+                      <span href="#" class="card-title">{{category.name}}</span>
+                    </h3>
+
+                    <p class="card-text">{{category.subtitle}}</p>
+                  </div>
+
+                </div>
+              </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+
+        </div>
+      </section>
+
+      <!-- 
+        - #ABOUT
+      -->
+
+      <section class="section about" id="about" aria-label="about">
+        <div class="container">
+
+          <h2 class="section-title">Wood Store</h2>
+
+          <p class="section-text">
+            Quand on part d'une idée pour sa décoration d'intérieur, qu'on cherche un style élégant, une décoration naturelle, par éliminations successives, on arrive forcément chez wood store. De même, en partant de chez wood store et en suivant le même processus en sens inverse, on finit par avoir une super décoration.
+          </p>
+
+          <div class="about-card">
+            <figure class="card-banner img-holder" style="--width: 1170; --height: 450;">
+              <img src="./assets/images/about-banner.jpg" width="1170" height="450" loading="lazy" alt="Woodex promo"
+                class="img-cover">
+            </figure>
+
+            <button class="play-btn" aria-label="play video">
+              <ion-icon name="play-circle-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 
+        - #PRODUCTS
+      -->
+
+      <section class="section product" id="product" aria-label="product">
+        <div class="container">
+
+          <div class="title-wrapper">
+            <h2 class="h2 section-title">Nos produits</h2>
+
+            <ul class="filter-btn-list">
+              <li class="filter-btn-item">
+                <button class="filter-btn active" data-filter-btn="all">Tout</button>
+              </li>
+
+              {% for key, category in categories  %}
+                <li class="filter-btn-item">
+                  <button class="filter-btn" data-filter-btn="category{{key + 1}}">{{category.name}}</button>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <ul class="grid-list product-list" data-filter="all">
+            {% for product in products %}
+            <li class="category{{product.category.id}}">
+              <div class="product-card">
+
+                <a href="{{path('app_product', {'slug': product.slug})}}" class="card-banner img-holder has-before" style="--width: 300; --height: 300;">
+                  <img src="./uploads/{{product.image}}" width="300" height="300" loading="lazy"
+                    alt="{{product.name}}" class="img-cover">
+
+                  {% if product.sale %}
+                    <ul class="badge-list">
+                      <li>
+                        <div class="badge orange">Promo</div>
+                      </li>
+                      <li>
+                        <div class="badge cyan">{{product.sale}}%</div>
+                      </li>
+                    </ul>
+                  {% endif %}
+                  {% if product.subtitle %}
+                    <div class="card-badge">{{product.subtitle}}</div>
+                  {% endif %}
+                </a>
+
+                <div class="card-content">
+                  <h3 class="h3">
+                    <a href="#" class="card-title">{{product.name}}</a>
+                  </h3>
+
+                  <div class="card-price">
+                    {# <del class="del">19.00</del> #}
+
+                    <data class="price" value="{{product.price}}">{{(product.price / 100)|number_format(2, ',', '.')}}€</data>
+                  </div>
+                </div>
+
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+
+        </div>
+      </section>
+
+      <!-- 
+        - #NEWSLETTER
+      -->
+
+      <section class="section newsletter" aria-label="newsletter">
+        <div class="container">
+
+          <div class="newsletter-card">
+
+            <div class="card-content">
+              <h2 class="h2 section-title">Notre Newsletter</h2>
+
+              <p class="section-text">
+                Abonne-toi à notre newsletter pour rester informé.
+              </p>
+            </div>
+
+            <form action="" class="card-form">
+              <input type="email" name="email_address" placeholder="Votre adresse email" required class="email-field">
+
+              <button type="submit" class="newsletter-btn" aria-label="subscribe">
+                <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+              </button>
+            </form>
+
+          </div>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+{% endblock %}
